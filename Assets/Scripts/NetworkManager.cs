@@ -4,6 +4,7 @@ using Photon.Pun;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
+    [SerializeField] private int maxIntPlayers = 2;
     void Start()
     {
         //Conectar al servidor de PUN
@@ -21,7 +22,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("No se encontro una sala, creando una nueva...");
         // Crear una nueva sala si no hay ninguna disponible
-        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions{MaxPlayers = 1});
+        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions{MaxPlayers = maxIntPlayers});
     }
 
     public override void OnJoinedRoom()

@@ -1,12 +1,32 @@
 using UnityEngine;
+using Photon.Pun;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviourPun
 {
     [SerializeField] float bulletSpeed;
+    [SerializeField] float lifeTime;
+
+    void Start()
+    {
+        if (photonView.IsMine)
+        {
+            Destroy(gameObject, lifeTime);
+        }
+    }
 
     void Update()
     {
-        transform.position += transform.forward * bulletSpeed * Time.deltaTime;
-        Destroy(gameObject, 3);
+        transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (photonView.IsMine && other.CompareTag("Player"))
+        {
+            Debug.Log("Hit player");
+            PhotonNetwork.Destroy(gameObject);
+        }
+    }
+
+
 }

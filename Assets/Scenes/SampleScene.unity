@@ -401,7 +401,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -561,6 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbcafb79dc0ab6d48b227da40838ebab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxIntPlayers: 4
 --- !u!4 &892826885
 Transform:
   m_ObjectHideFlags: 0
