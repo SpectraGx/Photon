@@ -9,18 +9,20 @@ public class CharacterMovement : MonoBehaviourPun
 
 
     [Header("References")]
-    [SerializeField] Camera mainCamera;
+    //[SerializeField] Camera mainCamera;
     CharacterController controller;
+    Rigidbody rb;
 
 
     void Awake()
     {
-        mainCamera = FindAnyObjectByType<Camera>();
+        //mainCamera = FindAnyObjectByType<Camera>();
     }
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -31,12 +33,21 @@ public class CharacterMovement : MonoBehaviourPun
             float z = Input.GetAxisRaw("Vertical");
 
 
-            Vector3 dir = new Vector3(x, 0f, z);
+            Vector3 dir = new Vector3(x, 0f, z)*pSpeed;
+            //dir.Normalize();
+            rb.velocity = dir;
+
+
+            /*
             if (dir.magnitude > 0)
             {
                 dir.Normalize();
                 controller.Move(dir * pSpeed * Time.deltaTime);
             }
+
+            */
+
+            /*
 
             Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
@@ -49,6 +60,7 @@ public class CharacterMovement : MonoBehaviourPun
 
                 transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
             }
+            */
 
             
         }

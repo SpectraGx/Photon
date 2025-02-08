@@ -5,6 +5,13 @@ public class Bullet : MonoBehaviourPun
 {
     [SerializeField] float bulletSpeed;
     [SerializeField] float lifeTime;
+    private Photon.Realtime.Player owner;
+
+    public void Initialize (float bulletSpeed,  Photon.Realtime.Player owner)
+    {
+        this.bulletSpeed = bulletSpeed;
+        this.owner = owner;
+    }
 
     void Start()
     {

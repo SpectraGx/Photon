@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 3267983638960898936}
   - component: {fileID: 391721304155899186}
   - component: {fileID: 2099513729187364355}
+  - component: {fileID: 2937550818126759253}
   - component: {fileID: 2095428587477646324}
   - component: {fileID: 8675769551168436596}
   - component: {fileID: 5182916946498814134}
@@ -368,7 +369,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pSpeed: 5
-  mainCamera: {fileID: 0}
+--- !u!114 &2937550818126759253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2734978910067001127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b0b4d9ca3e7b1438e7784bdb8da130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2095428587477646324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,10 +415,10 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 0
-  m_ImplicitTensor: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
