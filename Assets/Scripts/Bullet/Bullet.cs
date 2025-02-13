@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviourPun
     [SerializeField] float lifeTime;
     private Photon.Realtime.Player owner;
 
-    public void Initialize (float bulletSpeed,  Photon.Realtime.Player owner)
+    public void Initialize(float bulletSpeed, Photon.Realtime.Player owner)
     {
         this.bulletSpeed = bulletSpeed;
         this.owner = owner;
@@ -28,12 +28,19 @@ public class Bullet : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        if (photonView.IsMine && other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            Debug.Log("Hit player");
-            PhotonNetwork.Destroy(gameObject);
+            DestroyBullet();
         }
     }
 
+    void DestroyBullet()
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
+
+    }
 
 }
