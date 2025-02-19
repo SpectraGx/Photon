@@ -3,44 +3,51 @@ using Photon.Pun;
 
 public class Bullet : MonoBehaviourPun
 {
-    [SerializeField] float bulletSpeed;
-    [SerializeField] float lifeTime;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float lifeTime = 5f;
     private Photon.Realtime.Player owner;
 
-    public void Initialize(float bulletSpeed, Photon.Realtime.Player owner)
+    public void Initialize(float bulletSpeed, Photon.Realtime.Player bulletOwner)
     {
-        this.bulletSpeed = bulletSpeed;
-        this.owner = owner;
+        speed = bulletSpeed;
+        owner = bulletOwner;
     }
 
     void Start()
     {
         if (photonView.IsMine)
         {
-            Destroy(gameObject, lifeTime);
+            Invoke("DestroyBullet", 1f);
         }
     }
 
     void Update()
     {
-        transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+        if (photonView.IsMine)
+        {
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (photonView.IsMine)
         {
-            DestroyBullet();
+            if (!other.CompareTag("Player"))
+            {
+                DestroyBullet();
+            }
         }
     }
 
     void DestroyBullet()
     {
+        // Solo el dueño del PhotonView ejecuta esta logica
         if (photonView.IsMine)
         {
+            //Destuye la bala en la red
             PhotonNetwork.Destroy(gameObject);
         }
-
     }
 
 }

@@ -9,7 +9,6 @@ public class CharacterMovement : MonoBehaviourPun
 
 
     [Header("References")]
-    //[SerializeField] Camera mainCamera;
     CharacterController controller;
 
     void Start()

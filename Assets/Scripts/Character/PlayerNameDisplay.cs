@@ -6,39 +6,53 @@ using TMPro;
 
 public class PlayerNameDisplay : MonoBehaviourPun
 {
-    [Header("Inspector")]
     [SerializeField] private GameObject nameLabelPrefab;
-    [SerializeField] private GameObject nameLabel;
+    private GameObject nameLabel;
 
     void Start()
     {
-        if (photonView.IsMine){
-            nameLabel = Instantiate(nameLabelPrefab, transform.position, Quaternion.identity, transform);
-            nameLabel.transform.SetParent(GameObject.Find("Canvas").transform, false);
-
-            TextMeshProUGUI nameText = nameLabel.GetComponent<TextMeshProUGUI>();
-            nameText.text = photonView.Owner.NickName;
-
-            nameText.color = Color.green;
-        }
-        else
+        if(photonView.IsMine)
         {
+            // Solo el dueño del PhotonView instancia el nombre del usuario
             nameLabel = Instantiate(nameLabelPrefab, Vector3.zero, Quaternion.identity);
             nameLabel.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
+            // Asignar el nombre de usuario al texto
             TextMeshProUGUI nameText = nameLabel.GetComponent<TextMeshProUGUI>();
+            photonView.Owner.NickName = $"Player {PhotonNetwork.PlayerList.Length}";
             nameText.text = photonView.Owner.NickName;
 
-            nameText.color = Color.red;
+            //Asignar un color diferente para el jugador local
+            nameText.color = Color.green; //Puedes cambiar el color segun tus preferencias
+        }
+        else
+        {
+            // Para otros jugadores, instanciar el nombre del usuario
+            nameLabel = Instantiate(nameLabelPrefab, Vector3.zero, Quaternion.identity);
+            nameLabel.transform.SetParent(GameObject.Find("Canvas").transform, false);
+
+
+            TextMeshProUGUI nameText = nameLabel.GetComponent<TextMeshProUGUI>();
+            nameText.text = photonView.Owner.NickName;
         }
     }
 
+    // Update is called once per frame
     void Update()
     {
+        if(nameLabel != null)
+        {
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * 2f);
+            nameLabel.transform.position = screenPosition;
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Destruir el nombre de usuario cuando el jugador se destruye
         if (nameLabel != null)
         {
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * 2);
-            nameLabel.transform.position = screenPosition;
+            Destroy(nameLabel);
         }
     }
 }
