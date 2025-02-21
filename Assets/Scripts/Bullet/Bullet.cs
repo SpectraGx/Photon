@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            Invoke("DestroyBullet", 1f);
+            Invoke("DestroyBullet", lifeTime);
         }
     }
 
