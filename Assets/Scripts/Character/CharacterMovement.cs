@@ -1,36 +1,64 @@
-using UnityEngine;
 using Photon.Pun;
-using System;
+using UnityEngine;
 
 public class CharacterMovement : MonoBehaviourPun
 {
-    [Header("Settings: Move")]
-    [SerializeField] float pSpeed = 1;
-
-
-    [Header("References")]
     CharacterController controller;
 
-    void Start()
+    [SerializeField] float pSpeed = 1;
+    [SerializeField] bool isGrounded = true;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float groundCheckDistance = 2;
+    [SerializeField] Animator animator;
+    [SerializeField] string MoveAnim;
+    [SerializeField] string IdleAnim;
+    public Vector3 dir;
+
+
+    void Awake()
     {
         controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        if (photonView.IsMine)
+        if (!photonView.IsMine) return;
+        CheckGround();
+        HandleMovement();
+
+    }
+
+    void HandleMovement()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float y;
+        float z = Input.GetAxisRaw("Vertical");
+
+        if (!isGrounded)
         {
-            float x = Input.GetAxisRaw("Horizontal");
-            float z = Input.GetAxisRaw("Vertical");
+            y = -1;
+        }
+        else
+        {
+            y = 0;
+        }
 
 
-            Vector3 dir = new Vector3(x, 0f, z);
-            if(dir.magnitude > 0)
-            {
-                dir.Normalize();
-                controller.Move(dir * pSpeed * Time.deltaTime);
-            } 
+        dir = new Vector3(x, y, z);
+        if (dir.magnitude != 0)
+        {
+            dir.Normalize();
+            controller.Move(dir * pSpeed * Time.deltaTime);
+            animator.Play(MoveAnim);
+        }
+        else
+        {
+            animator.Play(IdleAnim);
         }
     }
 
+    void CheckGround()
+    {
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+    }
 }

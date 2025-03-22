@@ -11,7 +11,7 @@ public class CameraManager : MonoBehaviour
     void Start()
     {
         // Esperar un momento para que el jugador se instancie
-        Invoke("FindPlayer", 5f);
+        Invoke("FindPlayer", 6f);
     }
 
     void FindPlayer()

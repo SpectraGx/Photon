@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
 
+// Clase que maneja la interfaz de usuario del jugador, incluyendo la visualización
+// de la salud y las monedas. Hereda de MonoBehaviourPun para funcionalidad multijugador.
 public class PlayerUIManager : MonoBehaviourPun
 {
-        // Referencias a los objetos de UI que muestran la información
+    // Referencias a los objetos de UI que muestran la información
     public GameObject healthTextObject;
     public GameObject coinsTextObject;
     

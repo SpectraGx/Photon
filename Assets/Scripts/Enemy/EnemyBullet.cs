@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
+using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f; // Velocidad del proyectil
-    [SerializeField] private float lifetime = 5f; // Tiempo de vida del proyectil
+    public float speed = 10f; // Velocidad del proyectil
+    public float lifetime = 5f; // Tiempo de vida del proyectil
     private Vector3 direction; // Dirección del proyectil
 
     void Start()
@@ -31,10 +29,10 @@ public class EnemyBullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             // Si el proyectil choca con un jugador, causar daño
-            CharacterHealth characterHealth = collision.gameObject.GetComponent<CharacterHealth>();
-            if (characterHealth != null)
+            CharacterHealth playerHealth = collision.gameObject.GetComponent<CharacterHealth>();
+            if (playerHealth != null)
             {
-                characterHealth.photonView.RPC("TakeDamage", RpcTarget.All, 10); // Causar 10 de daño
+                playerHealth.photonView.RPC("TakeDamage", RpcTarget.All, 10); // Causar 10 de daño
             }
         }
 

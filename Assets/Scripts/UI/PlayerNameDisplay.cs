@@ -1,28 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 using TMPro;
+using Photon.Pun;
 
 public class PlayerNameDisplay : MonoBehaviourPun
 {
-    [SerializeField] private GameObject nameLabelPrefab; // Prefab del nombre de usuario (TextMeshPro)
-    [SerializeField] private GameObject healthLabelPrefab; // Prefab de la vida del jugador (TextMeshPro)
+    public GameObject nameLabelPrefab; // Prefab del nombre de usuario (TextMeshPro)
+    public GameObject healthLabelPrefab; // Prefab de la vida del jugador (TextMeshPro)
     private GameObject nameLabel; // Instancia del nombre de usuario
     private GameObject healthLabel; // Instancia de la vida del jugador
     private TextMeshProUGUI nameText;
     private TextMeshProUGUI healthText;
-    private CharacterHealth characterHealth;
+    private CharacterHealth CharacterHealth;
 
     void Start()
     {
         if (photonView.IsMine)
         {
-            // Obtener la referencia a PlayerHealth primero
-            characterHealth = GetComponent<CharacterHealth>();
-            if (characterHealth == null)
+            // Obtener la referencia a CharacterHealth primero
+            CharacterHealth = GetComponent<CharacterHealth>();
+            if (CharacterHealth == null)
             {
-                Debug.LogError("No se encontró el componente PlayerHealth");
+                Debug.LogError("No se encontró el componente CharacterHealth");
                 return;
             }
 
@@ -60,12 +58,12 @@ public class PlayerNameDisplay : MonoBehaviourPun
 
             if (healthText != null)
             {
-                healthText.text = $"Vida: {characterHealth.currentHealth}"; // Ahora playerHealth ya está asignado
+                healthText.text = $"Vida: {CharacterHealth.currentHealth}"; // Ahora CharacterHealth ya está asignado
                 healthText.color = Color.green;
                 Debug.Log("Texto de vida asignado.");
-
+                
                 // Suscribirse al evento de cambio de vida
-                characterHealth.onHealthChanged += UpdateHealthDisplay;
+                CharacterHealth.onHealthChanged += UpdateHealthDisplay;
             }
             else
             {
@@ -107,7 +105,7 @@ public class PlayerNameDisplay : MonoBehaviourPun
 
             if (healthText != null)
             {
-                healthText.text = $"Vida: {characterHealth.currentHealth}"; // Valor inicial de vida
+                healthText.text = $"Vida: {CharacterHealth.currentHealth}"; // Valor inicial de vida
                 Debug.Log("Texto de vida asignado.");
             }
             else
@@ -115,11 +113,11 @@ public class PlayerNameDisplay : MonoBehaviourPun
                 Debug.LogError("El prefab de vida no tiene un componente TextMeshProUGUI.");
             }
 
-            // Buscar el componente PlayerHealth
-            characterHealth = GetComponent<CharacterHealth>();
-            if (characterHealth != null)
+            // Buscar el componente CharacterHealth
+            CharacterHealth = GetComponent<CharacterHealth>();
+            if (CharacterHealth != null)
             {
-                characterHealth.onHealthChanged += UpdateHealthDisplay;
+                CharacterHealth.onHealthChanged += UpdateHealthDisplay;
             }
         }
     }
@@ -148,15 +146,9 @@ public class PlayerNameDisplay : MonoBehaviourPun
             float healthPercentage = (float)currentHealth / 100f; // Asumimos que 100 es el valor máximo de vida
 
             // Actualizar el color según el umbral
-            if (healthPercentage <= 30f) // Umbral de vida baja
-            {
-                healthText.color = Color.red;
-            }
-            else
-            {
-                // Interpolar color entre rojo y verde basado en el porcentaje de vida
-                healthText.color = Color.Lerp(Color.red, Color.green, healthPercentage / 100f);
-            }
+            float targetPoint = 1 - healthPercentage;
+            healthText.color = Color.Lerp(Color.green, Color.red, targetPoint);
+            
         }
     }
 
@@ -176,9 +168,9 @@ public class PlayerNameDisplay : MonoBehaviourPun
         }
 
         // Desuscribirse del evento cuando se destruye el objeto
-        if (characterHealth != null)
+        if (CharacterHealth != null)
         {
-            characterHealth.onHealthChanged -= UpdateHealthDisplay;
+            CharacterHealth.onHealthChanged -= UpdateHealthDisplay;
         }
     }
 }
