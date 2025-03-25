@@ -54,7 +54,7 @@ public class EnemyShooter : MonoBehaviourPun
             {
                 Vector3 directionToPlayer = (targetPlayer.transform.position - transform.position).normalized;
                 float dot = Vector3.Dot(transform.forward, directionToPlayer);
-                
+
                 if (dot > 0.8f)
                 {
                     Shoot();
@@ -101,11 +101,11 @@ public class EnemyShooter : MonoBehaviourPun
 
             // Calcular la rotación solo en el eje Y
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            
+
             // Aplicar una rotación más suave
             transform.rotation = Quaternion.RotateTowards(
-                transform.rotation, 
-                targetRotation, 
+                transform.rotation,
+                targetRotation,
                 rotationSpeed * Time.deltaTime * 60f // Multiplicar por 60 para mejor control de la velocidad
             );
 
@@ -124,13 +124,13 @@ public class EnemyShooter : MonoBehaviourPun
 
         // Calcular dirección hacia el jugador
         Vector3 direction = (targetPlayer.transform.position - firePoint.position).normalized;
-        
+
         // Crear el proyectil usando PhotonNetwork.Instantiate
         try
         {
             GameObject projectile = PhotonNetwork.Instantiate(
-                projectilePrefab.name, 
-                firePoint.position, 
+                projectilePrefab.name,
+                firePoint.position,
                 Quaternion.LookRotation(direction)
             );
 
@@ -174,24 +174,11 @@ public class EnemyShooter : MonoBehaviourPun
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (!photonView.IsMine) return;
-
         if (other.CompareTag("Bullet"))
         {
-            // Llamar al RPC de daño
-            photonView.RPC("TakeDamage", RpcTarget.All, 10f);
-            
-            // Destruir la bala
-            if (other.gameObject.GetComponent<PhotonView>())
-            {
-                PhotonNetwork.Destroy(other.gameObject);
-            }
-            else
-            {
-                Destroy(other.gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 
@@ -204,7 +191,7 @@ public class EnemyShooter : MonoBehaviourPun
             Debug.Log("Bullet hit enemy!");
             // Llamar al RPC de daño
             photonView.RPC("TakeDamage", RpcTarget.All, 10f);
-            
+
             // Destruir la bala
             if (collision.gameObject.GetComponent<PhotonView>())
             {

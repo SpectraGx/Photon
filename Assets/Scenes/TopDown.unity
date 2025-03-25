@@ -286,11 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25dc73b2f6ac48647846378812ed3f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  spawnPoints: []
 --- !u!114 &419773415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,21 +355,21 @@ MonoBehaviour:
     type: 3}
   obstaclePrefabs:
   - {fileID: 6426188007625922121, guid: 20dfd17e77db9524394839ec12c2194f, type: 3}
-  obstaclePercentage: 1
+  obstaclePercentage: 10
   generateCeiling: 0
   canSpawnObstacles: 1
-  spawnSpawnPercentage: 5
+  spawnSpawnPercentage: 8
   spawnPrefab: {fileID: 8703822819092878082, guid: 58914856415ca0841a3752a75f40811a,
     type: 3}
   spawnContainer: {fileID: 640245891}
   minSpawnSpacing: 5
   canSpawnSpawns: 1
-  itemSpawnPercentage: 10
+  itemSpawnPercentage: 15
   itemPrefabs:
   - {fileID: 8006196482371721735, guid: 25e2c5d71afdbbf4baa9d3d7ed58d881, type: 3}
   minItemSpacing: 8
   canSpawnItems: 1
-  enemySpawnPercentage: 1
+  enemySpawnPercentage: 10
   enemyPrefabs:
   - {fileID: 7073081037295251981, guid: d12c1f08f4645c64aa979c7dc7b50e7b, type: 3}
   minEnemySpacing: 5
@@ -1029,6 +1025,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1608870012}
   - component: {fileID: 1608870011}
+  - component: {fileID: 1608870014}
+  - component: {fileID: 1608870013}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1066,6 +1064,45 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1608870013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608870010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1608870014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608870010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1608870013}
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1658358079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,11 +1666,11 @@ SceneRoots:
   - {fileID: 1393331766}
   - {fileID: 1031706395}
   - {fileID: 419773416}
+  - {fileID: 1608870012}
   - {fileID: 1517149853}
   - {fileID: 1947947825}
   - {fileID: 834267041}
-  - {fileID: 1608870012}
   - {fileID: 1005231619}
   - {fileID: 1658358080}
-  - {fileID: 640245892}
   - {fileID: 461622747}
+  - {fileID: 640245892}
