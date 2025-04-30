@@ -14,6 +14,12 @@ public class CharacterHealth : MonoBehaviourPun
     public System.Action<int> onHealthChanged;
     [SerializeField] private PlayerUIManager uiManager;
 
+    [Header("Audio Settings")]
+    [SerializeField] AudioSource hurtSFX;
+
+    [Header("Particles")]
+    [SerializeField] ParticleSystem deadVFX;
+
     // Inicializa la salud del jugador al valor máximo
     private void Start()
     {
@@ -52,6 +58,7 @@ public class CharacterHealth : MonoBehaviourPun
             if (currentHealth <= 0)
             {
                 Die();
+                deadVFX.Play(); // Reproduce el efecto de muerte
             }
         }
     }
@@ -64,6 +71,7 @@ public class CharacterHealth : MonoBehaviourPun
             // Asumimos que el daño de la bala es 10, puedes ajustar esto según sea necesario
             TakeDamage(10);
             Debug.Log("Impacto de bala recibido.");
+            hurtSFX.Play(); // Reproduce el sonido de daño
         }
     }
 

@@ -17,6 +17,10 @@ public class CharacterShooting : MonoBehaviourPun
     [SerializeField] Animator animator;
     [SerializeField] string ShootAnim;
 
+    [Header("Audio Settings")]
+    [SerializeField] AudioSource shootSFX;
+  
+
     void Update()
     {
         // Verifica si el jugador local es el dueño del PhotonView y si presiona el botón de disparo
@@ -24,6 +28,7 @@ public class CharacterShooting : MonoBehaviourPun
         {
             Shoot(); // Llama al método para disparar
             animator.Play(ShootAnim);
+            shootSFX.Play(); // Reproduce el sonido de disparo
         }
     }
 

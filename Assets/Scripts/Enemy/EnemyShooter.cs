@@ -24,6 +24,13 @@ public class EnemyShooter : MonoBehaviourPun
     [SerializeField] string ShootAnim;
     [SerializeField] string IdleAnim;
 
+    [Header("Audio Settings")]
+    [SerializeField] AudioSource shootSFX;
+    [SerializeField] AudioSource deadSFX;
+
+    [Header("Particles")]
+    [SerializeField] GameObject deadVFX;
+
     private void Start()
     {
         currentHealth = maxHealth;
@@ -141,10 +148,7 @@ public class EnemyShooter : MonoBehaviourPun
                 projectileComponent.SetDirection(direction);
                 Debug.Log("Proyectil disparado hacia: " + direction);
             }
-            else
-            {
-                Debug.LogWarning("El proyectil no tiene el componente Projectile");
-            }
+            shootSFX.Play();
         }
         catch (System.Exception e)
         {
@@ -178,6 +182,8 @@ public class EnemyShooter : MonoBehaviourPun
     {
         if (other.CompareTag("Bullet"))
         {
+            deadSFX.Play();
+            Instantiate(deadVFX, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
